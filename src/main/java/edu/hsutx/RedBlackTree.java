@@ -38,7 +38,11 @@ public class RedBlackTree<E> {
             this.color = color;
         }
 
-        // TODO - add comments as appropriate including a javadoc for each method
+        /**
+         * Returns the depth of all nodes in the tree (distance from the root)
+         * 
+         * @return  the depth of all nodes
+         */
         public int getDepth() {
 
             int counter = 1;
@@ -52,6 +56,11 @@ public class RedBlackTree<E> {
             return counter;
         }
 
+        /**
+         * Returns the depth of all the black nodes in the tree
+         * 
+         * @return the depth of all black nodes
+         */
         public int getBlackDepth() {
 
             int counter = 0;
@@ -68,19 +77,21 @@ public class RedBlackTree<E> {
         }
     }
 
+    /**
+     * Initializes an empty red black tree
+     */
     public RedBlackTree() {
-        root = null; // Start with an empty tree. This is the one time we can have a null ptr instead
-                     // of a null key node
+        root = null;                   
         size = 0;
     }
 
+    /**
+     * Insert a new node at bottom of the tree
+     * 
+     * @param key   the key of the new node
+     * @param value the value of the new node
+     */
     public void insert(String key, E value) {
-
-        /*
-         * x = traversal Node (current)
-         * y = parent (previous)
-         * z = new Node (pointer)
-         */
 
         // If root is null, the tree is empty
         // Therefore set the head(root) to be the new Node
@@ -97,8 +108,8 @@ public class RedBlackTree<E> {
             return;
 
         while (current != null) {
-            int result = key.compareTo(current.key); // To compare strings, returns 0 if equal, negative if less than,
-                                                     // and positive if greater than
+            int result = key.compareTo(current.key); 
+                                                     
             previous = current;
             if (result > 0) {
                 current = current.right;
@@ -111,15 +122,6 @@ public class RedBlackTree<E> {
         // Parent set to previous Node, and set color to red
         pointer = new Node(key, value, previous, true);
 
-        /*
-         * If the parent Node (previous) of the new Node is null
-         * We know we are at the top of the tree, so set new Node to be the root
-         * Currently not using this solution for an empty tree, as I take care of it
-         * earlier in this method
-         */
-        // if (previous == null) {
-        // root = pointer;
-        // }
 
         // If the new Node is less than the parent, set the left child of parent to be
         // the new Node
@@ -132,13 +134,17 @@ public class RedBlackTree<E> {
 
         pointer.left = null;
         pointer.right = null;
-        // pointer.color = true; // probably not necessary (cause I did this when I created the new Node) but
-        //                       // better safe than sorry
         size++;
         fixInsertion(pointer);
         return;
     }
 
+    /**
+     * Replaces a node with another in the tree
+     * 
+     * @param toDelete   the node to be replaced
+     * @param newPointTo the node that will replace the deleted node
+     */
     public void transplant(Node toDelete, Node newPointTo) {
         if (toDelete.parent == null) { // If toDelete is the root, update the root
             root = newPointTo;
@@ -152,6 +158,12 @@ public class RedBlackTree<E> {
         }
     }
 
+    /**
+     * Returns the node with the smallest key starting from the given node
+     * 
+     * @param node the node to start from
+     * @return     the node with the smallest key
+     */
     public Node treeMinimum(Node node) {
         while (node.left != null) {
             node = node.left;
@@ -159,9 +171,15 @@ public class RedBlackTree<E> {
         return node;
     }
 
+    /**
+     * Deletes a node from the tree based on the given key
+     * 
+     * @param key the key of the node to delete
+     */
     public void delete(String key) {
             
             Node nodeToDelete = find(key);
+
             if (nodeToDelete == null) {
                 return;
             }
@@ -203,6 +221,11 @@ public class RedBlackTree<E> {
             size--;
     }
 
+    /**
+     * Fixes the tree after insertion to follow red black tree rules
+     * 
+     * @param node the mew node that was inserted
+     */
     private void fixInsertion(Node node) {
         Node uncle;
         
@@ -255,6 +278,11 @@ public class RedBlackTree<E> {
         root.color = false;
     }
 
+    /**
+     * Fixes the tree after deletion to follow red black tree rules
+     * 
+     * @param node the node to start fixing from
+     */
     private void fixDeletion(Node node) {
         Node sibling;
         while (node != root && isBlack(node)) { // Loop until node is root or node is red
@@ -319,12 +347,12 @@ public class RedBlackTree<E> {
         node.color = false; // Ensure the node is black
     }
 
+    /**
+     * Does a left rotation at the given node
+     * 
+     * @param node the node to be rotated
+     */
     private void rotateLeft(Node node) {
-
-        /*
-         * y = newHead
-         * x = node
-         */
 
         Node newHead = node.right;
         node.right = newHead.left;
@@ -347,12 +375,12 @@ public class RedBlackTree<E> {
         node.parent = newHead;
     }
 
+    /**
+     * Does a right rotation at the given node
+     * 
+     * @param node the node to be rotated
+     */
     private void rotateRight(Node node) {
-
-        /*
-         * y = newHead
-         * x = node
-         */
 
         Node newHead = node.left;
         node.left = newHead.right;
@@ -375,6 +403,12 @@ public class RedBlackTree<E> {
         node.parent = newHead;
     }
 
+    /**
+     * Finds a node in the tree based on a given key
+     * 
+     * @param key the key to find
+     * @return    the node corresponding to the key, or null if not found
+     */
     Node find(String key) {
 
         Node current = root;
@@ -394,9 +428,13 @@ public class RedBlackTree<E> {
         return null;
     }
 
+    /**
+     * Gets the value of a node in the tree based on a given key
+     * 
+     * @param key the key to find
+     * @return    the value of the node, or null if not found
+     */
     public E getValue(String key) {
-        // TODO - Use find() to locate the node with the given key and return its value
-        // If the key does not exist, return null
         Node current = find(key);
         if (current != null) {
             return current.value;
