@@ -43,6 +43,7 @@ public class CowboySeatTree extends RedBlackTree<SeatAssignment> {
      */
 
     private Node traverseTreeForUnassigned(Node n, String key) {
+        if (n==null) return null;
         if (n.key == null) return null;
         if (key.compareTo(n.key)<0) {
             Node bestLeftOption = null;
@@ -58,7 +59,7 @@ public class CowboySeatTree extends RedBlackTree<SeatAssignment> {
 
     public SeatAssignment getUnassignedBlockOverThreshold(int threshold) {
 
-        String searchKey = String.format("%05d", threshold) + "0000000";
+        String searchKey = String.format("%06d", threshold) + "0000000";
         // Traverse the tree to find the first unassigned node with key > searchkey
         // a node is unassigned if node.value.getOwner() is null
         Node unassignedNode = traverseTreeForUnassigned(this.root, searchKey);
@@ -68,4 +69,7 @@ public class CowboySeatTree extends RedBlackTree<SeatAssignment> {
 
     }
 
+    public Node getRoot() {
+        return this.root;
+    }
 }

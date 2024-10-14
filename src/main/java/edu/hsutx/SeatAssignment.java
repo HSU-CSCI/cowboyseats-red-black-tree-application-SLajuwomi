@@ -27,7 +27,7 @@ public class SeatAssignment {
      * @param seatStartIndex The starting index of the seat assignment.
      */
     public SeatAssignment(int seatQuantity, int seatStartIndex) {
-        this.key = String.format("%05d", seatQuantity) + String.format("%07d",seatStartIndex);
+        this.key = String.format("%06d", seatQuantity) + String.format("%07d",seatStartIndex);
         this.owner = null;
         this.seatQuantity = seatQuantity;
         this.seatStartIndex = seatStartIndex;
@@ -43,7 +43,7 @@ public class SeatAssignment {
      * @param seatStartIndex The starting index of the seat assignment.
      */
     public SeatAssignment(String owner, int seatQuantity, int seatStartIndex) {
-        this.key = String.format("%05d", seatQuantity) + String.format("%07d",seatStartIndex);
+        this.key = String.format("%06d", seatQuantity) + String.format("%07d",seatStartIndex);
         this.owner = owner;
         this.seatQuantity = seatQuantity;
         this.seatStartIndex = seatStartIndex;
@@ -52,7 +52,7 @@ public class SeatAssignment {
     /**
      * Gets the unique key representing this seat assignment.
      * The key is a concatenation of the seat quantity and seat start index,
-     * formatted as 5 digits and 7 digits respectively.
+     * formatted as 6 digits and 7 digits respectively.
      *
      * @return The unique key for the seat assignment.
      */
